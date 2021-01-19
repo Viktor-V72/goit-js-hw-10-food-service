@@ -1,20 +1,26 @@
+const Theme = {
+  LIGHT: 'light-theme',
+  DARK: 'dark-theme',
+};
+const { LIGHT, DARK } = Theme;
+
 const checkBoxRef = document.querySelector('.theme-switch__toggle');
 const bodyRef = document.querySelector('body');
 
 function changeToDarkTheme() {
-    bodyRef.classList.add('dark-theme');
-    bodyRef.classList.remove('light-theme');
-    checkBoxRef.checked = true;
+  bodyRef.classList.add(DARK);
+  bodyRef.classList.remove(LIGHT);
+  checkBoxRef.checked = true;
 
     
 };
 
 function changeToLightTheme() {
-     bodyRef.classList.add('light-theme');
-     bodyRef.classList.remove('dark-theme');
-     checkBoxRef.checked = false;
+  bodyRef.classList.add(LIGHT);
+  bodyRef.classList.remove(DARK);
+  checkBoxRef.checked = false;
     
-     localStorage.removeItem('dark-theme');
+  //localStorage.removeItem(Theme.DARK);  второй способ
 }
 
 function changeTheme(event) {
@@ -32,16 +38,21 @@ checkBoxRef.addEventListener('change', changeTheme);
 
 // local Storage
 
-const savedDarkMessage = localStorage.getItem('dark-theme');
+const savedMessage = localStorage.getItem('Theme');
 
 checkBoxRef.addEventListener('change', saveToLocal);
 
-if (savedDarkMessage) {
+if (savedMessage === DARK) {
   changeToDarkTheme();
+} else {
+  changeToLightTheme();
 }
 
+
 function saveToLocal(event) {
-  if (event.currentTarget.checked) {
-    localStorage.setItem('dark-theme', event.currentTarget.checked);
+  if (event.target.checked) {
+    localStorage.setItem('Theme', DARK);
+  } else {
+    localStorage.setItem('Theme', LIGHT);
   }
 }
